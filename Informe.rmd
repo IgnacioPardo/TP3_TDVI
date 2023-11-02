@@ -1,0 +1,20 @@
+---
+title: "Trabajo Práctico 3"
+author: 
+    - "Zoe Borrone"
+    - "Luca Mazzarello"
+    - "Ignacio Pardo"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+## Introduccion
+
+El objetivo de este trabajo práctico es evaluar los distintos hiperparámetros encontrados durante el entrenamiento de una red neuronal, evaluarlos y elegir el conjunto de parámetros más óptimos. En el marco de este trabajo práctico, se realizará un clasificador de imágenes CIFAR-10, la cual contiene imágenes de pájaros, gatos, venados, perros, ranas, caballos, barcos y camiones.
+
+## Desarrollo
+# 1. Carga de datos
+
+```{python}
+
+```
