@@ -1,6 +1,6 @@
 ---
 title: "Trabajo Práctico 3"
-author: 
+author:
     - "Zoe Borrone"
     - "Luca Mazzarello"
     - "Ignacio Pardo"
@@ -10,11 +10,101 @@ output: pdf_document
 
 ## Introduccion
 
-El objetivo de este trabajo práctico es evaluar los distintos hiperparámetros encontrados durante el entrenamiento de una red neuronal, evaluarlos y elegir el conjunto de parámetros más óptimos. En el marco de este trabajo práctico, se realizará un clasificador de imágenes CIFAR-10, la cual contiene imágenes de pájaros, gatos, venados, perros, ranas, caballos, barcos y camiones.
+El objetivo de este trabajo práctico es evaluar los distintos hiperparámetros encontrados durante el entrenamiento de una red neuronal, evaluarlos y elegir el conjunto de parámetros más óptimos. En el marco de este trabajo práctico, se realizará un clasificador de imágenes CIFAR-10, la cual contiene imágenes de pájaros, gatos, venados, perros, ranas, caballos, barcos y camiones
 
 ## Desarrollo
-# 1. Carga de datos
 
-```{python}
+### Configuración
 
-```
+Comenzamos importando las librerías necesarias para el desarrollo del trabajo práctico. Luego creamos una cuenta en Weight & Biases para poder utilizarla como herramienta de analisis de los resultados obtenidos. Por último, importamos el dataset CIFAR-10 de TorchVision lo dividimos en los conjuntos de entrenamiento, validación y testeo con la libreria de pytorch.
+
+Como contamos con procesadores ARM M1, el backend para correr con la GPU es Metal, por lo que configuramos el dispositivo a MPS para evaluar en nuestras computadoras, pero tambien utilizamos la GPU T4 de Google Colab y una GPU 1080 Ti en una computadora de escritorio.
+
+#### Dataset
+
+El dataset CIFAR-10 contiene 60000 imágenes de 32x32 pixeles, divididas en 10 clases distintas. El conjunto de entrenamiento contiene 50000 imágenes y el conjunto de testeo 10000 imágenes. Las clases son mutuamente excluyentes y corresponden a las siguientes categorías:
+
+-   plane
+-   car
+-   bird
+-   cat
+-   deer
+-   dog
+-   frog
+-   horse
+-   ship
+-   truck
+
+### Arquitecturas de Redes Neuronales
+
+Realizamos 3 arquitecturas distintas de redes neuronales, con distintas cantidades de capas ocultas y distintas cantidades de neuronas por capa. Para cada una de ellas, variamos la cantidad de capas ocultas y la cantidad de neuronas por capa. Para cada una de estas combinaciones, realizamos 3 corridas distintas, para poder obtener un promedio de los resultados obtenidos (Las imagenes con las arquitecturas se encuentran anexadas al final del documento)
+
+#### Arquitectura 1: Softmax Dropout Relu LeakyRelu
+
+La primera arquitectura que decidimos hacer la llamamos Softmax Dropout Relu LeakyRelu, ya que cuenta con una capa de salida Softmax, una capa de Dropout y el resto de las capas con función de activación Relu y LeakyRelu. Esta arquitectura cuenta con 1 capa de entrada, 8 capas ocultas y una de salida.
+
+
+#### Arquitectura 2: LeakyRelu Dropout
+
+Esta arquitectura la llamamos LeakyRelu Dropout. Cuenta con una capa de entrada que transforma datos aplanados de 32x32x3 a un espacio de alta dimensión y se suceden múltiples capas ocultas. Entre estas capas, se emplea dropouts (5 veces) con una probabilidad del 0.4 para mitigar el sobreajuste y las unica funcion de activacion empleada es LeakyRelu para introducir no linealidad. El proceso culmina en una capa de salida, con una activación log-softmax para producir probabilidades de clase. En total, la arquitectura consta de 1 capa de entrada, 9 capas ocultas y 1 capa de salida.
+
+
+#### Arquitectura 3: Relu ELU LeakyRelu Dropout
+
+Por último, usamos las red neuronal Relu ELU LeakyRelu, cuya estructura es similar a la segunda arquitectura, pero con una capa de entrada, 5 capas ocultas y una de salida. La diferencia es que en esta arquitectura se utilizan las funciones de activación Relu, ELU y LeakyRelu, pero, al igual que las demas, se utiliza la función de activación log-softmax en la capa de salida.
+
+
+### Arquitecturas de Redes Neuronales Convolucionales
+
+Implementamos 5 distintas CNNs para observar su comportamiento en el dataset CIFAR-10. Para cada una de ellas, variamos la cantidad de capas ocultas y la cantidad de neuronas por capa.
+
+#### Arquitectura 1: NetConv
+
+Para la primera arquitectura, tomamos el ejemplo dado en clase y a partir del mismo comenzamos a modificarlo para adaptarlo al problema y obtener mejores resultados. Empezamos probando dropout como técnica de regularizacion y nos dimos cuenta que empeoraba. Luego, despues de varias pruebas, decidimos dejar LeakyRelu como única función de activacion, ya que nos dio mejores resultados que las demás.
+
+
+#### Arquitectura 2 y 3: VGG16 y VGG19
+
+Implementamos también dos arquitecturas de redes neuronales convolucionales basadas en la VGG16 y VGG19, respectivamente. Estos dos modelos sólo requieren un pre-procesamiento específico que consiste en restar a cada píxel el valor RGB medio, calculado en el conjunto de entrenamiento. Aunque ambas arquitecturas son muy similares y siguen la misma lógica, la VGG19 tiene un mayor número de capas de convolución.
+
+
+#### Arquitectura 4: InceptionNet
+
+Como vimos en clase, la arquitectura InceptionNet es una red neuronal convolucional que tiene como objetivo mejorar la performance de la red reduciendo la cantidad de parámetros. Para lograr esto, la red utiliza filtros de distintos tamaños en la misma capa, y luego los concatena. Para este modelo, lo sacamos de <https://www.kaggle.com/code/mohamedmustafa/10-implement-inceptionnet-from-scratch-pytorch> y lo modificamos para que se adapte a nuestro codigo.
+
+*Aclaración: Debido a una función usada para la implementación del mismo, solo es posible ejecutarlo con CUDA o CPU.*
+
+
+#### Arquitectura 5: ResNet
+
+Al igual que las anteriores, la arquitectura ResNet es una red neuronal convolucional que también vimos en clase. Esta red utiliza conexiones residuales para poder entrenar redes neuronales más profundas. Esto se logra sumando la entrada de una capa con la salida de la capa anterior. Para este modelo, lo sacamos de <https://blog.paperspace.com/writing-resnet-from-scratch-in-pytorch/> y lo modificamos para que se adapte a nuestro codigo.
+
+
+### Funciones de activación
+
+Como mencionamos y mostramos en el punto 2, probamos distintas funciones de activacion. En partiuclar en la CNN, los mejores resultados los obtuvimos con la función LeakyRelu, mientras que los peores con la funcion Sigmoid. En cuanto a las redes neuronales no convolucionales, tuvimos los mismos resultados siendo la funcion LeakyRelu la mejor para clasificar las imagenes, y la funcion Sigmoid la peor.
+
+*IMAGENES*
+
+### Optimizadores y Schedulers
+
+Para todas las redes neuronalies utilizamos SGD y Adam pero, luego de probar distintos valores para los hiperparametros, decidimos quedarnos con SGD, ya que nos dio mejores resultados. En cuanto a los schedulers, probamos con StepLR y CosineAnnealingLR, pero decidimos quedarnos con StepLR, ya que nos dio mejores resultados.
+
+
+### Entrenamiento
+
+Entrenamientos con distintos epochs y batch-sizes:
+
+*IMAGENES*
+
+### Regularizadores
+
+Los regularizadores que utilizamos y sus resultados fueron los siguientes:
+
+-   Dropout: Usamos Dropout en los primeros dos modelos (las red neuronal simple y la convucional) y en la convucional mostro mejoras mientras que en la simple no.
+-   Batch Normalization: Lo utilizamos en todas las redes que implementamos y en todas mostro mejoras.
+-   Data Augmentation: Implementamos con transofrmacions de pytorch las siguientes transformaciones: Voltear la imagen, rotar la imagen, aplicarle perspectiva y agregarle ruido de color. Sin embargo, en nuestras evaluaciones, empeoraba la performance de los modelos
+-   Weight Decay (regularizacion L2): Es un hiperparametro que evaluamos sobre VGG16 y ResNet pero no mejoraron los resultados. 
+-   Early Stopping: Esto lo implementamos a mano, viendo sobre los graficos que se generaron en Weights & Biases, cuando la loss de validacion comenzaba a crecer y en simultaneo veiamos como la accuracy mejoraba, identificabamos ese punto de inflexion como epoch maxima para entrenar ese modelo.
+
+### Resultados
