@@ -18,7 +18,9 @@ El objetivo de este trabajo práctico es evaluar los distintos hiperparámetros 
 
 Comenzamos importando las librerías necesarias para el desarrollo del trabajo práctico. Luego creamos una cuenta en Weight & Biases para poder utilizarla como herramienta de analisis de los resultados obtenidos. Por último, importamos el dataset CIFAR-10 de TorchVision lo dividimos en los conjuntos de entrenamiento, validación y testeo con la libreria de pytorch.
 
-Como contamos con procesadores ARM M1, el backend para correr con la GPU es Metal, por lo que configuramos el dispositivo a MPS para evaluar en nuestras computadoras, pero tambien utilizamos la GPU T4 de Google Colab y una GPU 1080 Ti en una computadora de escritorio.
+Como contamos con procesadores ARM M1, el backend para correr con la GPU es Metal, por lo que configuramos el dispositivo a MPS para evaluar en nuestras computadoras. 
+
+Ademas para entrenamientos mas intensivos en un comienzo utilizamos la GPU T4 de Google Colab, pero nos era poco práctico, por lo que montamos de forma remota en una computadora de escritorio con una GPU 1080 Ti con 8gm de VRAM y 16GB para entrenar los modelos. Salvo por InceptionNet, todos los modelos fueron primero evaluados con el backend MPS y luego entrenados con CUDA.
 
 #### Dataset
 
@@ -35,6 +37,8 @@ El dataset CIFAR-10 contiene 60000 imágenes de 32x32 pixeles, divididas en 10 c
 -   ship
 -   truck
 
+De las 50000 imágenes del conjunto de entrenamiento, separamos 10000 para el conjunto de validación.
+
 ### Arquitecturas de Redes Neuronales
 
 Realizamos 3 arquitecturas distintas de redes neuronales, con distintas cantidades de capas ocultas y distintas cantidades de neuronas por capa. Para cada una de ellas, variamos la cantidad de capas ocultas y la cantidad de neuronas por capa. Para cada una de estas combinaciones, realizamos 3 corridas distintas, para poder obtener un promedio de los resultados obtenidos (Las imagenes con las arquitecturas se encuentran anexadas al final del documento)
@@ -45,12 +49,12 @@ Para comparar las arquitecturas que implementamos, partimos de la arquitectura b
 
 #### Arquitectura 1: Softmax Dropout Relu LeakyRelu
 
-La primera arquitectura que decidimos hacer la llamamos Softmax Dropout Relu LeakyRelu, ya que cuenta con una capa de salida Softmax y el resto de las capas con función de activación Relu y LeakyRelu. Esta arquitectura cuenta con 1 capa de entrada, 8 capas ocultas y una de salida. Ademas de las funciones de activación, se utilizan dropouts (2 veces) con una probabilidad del 0.2 para mitigar el overfitting. La arquitectura de la red se puede visualizar en el anexo.
+La primera arquitectura que decidimos hacer la llamamos Softmax Dropout Relu LeakyRelu, ya que cuenta con una capa de salida Softmax y el resto de las capas con función de activación Relu y LeakyRelu. Esta arquitectura cuenta con 1 capa de entrada, 8 capas ocultas y una de salida. Ademas de las funciones de activación, se utilizan dropouts (2 veces) con una probabilidad del 0.2 para mitigar el overfitting. La arquitectura de la red se puede visualizar en el anexo. Esta fue la mejor de las 3 arquitecturas que implementamos.
 
 
 #### Arquitectura 2: LeakyRelu Dropout
 
-Esta arquitectura la llamamos LeakyRelu Dropout. Cuenta con dropouts (5 veces) con una probabilidad del 0.4 para mitigar el sobreajuste y la unica funcion de activacion empleada es LeakyRelu. El proceso culmina en una capa de salida, con una activación log-softmax para producir probabilidades de clase. En total, la arquitectura consta de 1 capa de entrada, 9 capas ocultas y 1 capa de salida.
+Esta arquitectura la llamamos LeakyRelu Dropout. Cuenta con dropouts (5 veces) con una probabilidad del 0.4 para mitigar el sobreajuste y la unica funcion de activacion empleada es LeakyRelu. El proceso culmina en una capa de salida, con una activación log-softmax para producir probabilidades de clase. En total, la arquitectura consta de 1 capa de entrada, 9 capas ocultas y 1 capa de salida. Esta fue la peor de las 3 arquitecturas que implementamos.
 
 #### Arquitectura 3: Relu ELU LeakyRelu Dropout
 
@@ -63,7 +67,7 @@ Por último, usamos las red neuronal Relu ELU LeakyRelu, cuya estructura es simi
 ![Accuracy de Validación por Epoch en NNs](plots/wandb_plots/nets/val_acc.png)
 ![Loss de Validación por Epoch en NNs](plots/wandb_plots/nets/val_loss.png)
 
-Ninguna de las 3 arquitecturas logró superar la performance de la arquitectura base sobre validación. Por lo que continuamos el desarrollo con Redes Neuronales Convolucionales.
+Ninguna de las 3 arquitecturas logró superar la performance de la arquitectura base sobre validación, aunqué la primera estuvo muy cerca. Por lo que continuamos el desarrollo con Redes Neuronales Convolucionales.
 
 ### Arquitecturas de Redes Neuronales Convolucionales
 
@@ -131,7 +135,6 @@ En los siguientes gráfico se puede observar la accuracy de validación y de ent
 ![Accuracy de validación per Epoch](plots/wandb_plots/all/val_acc.png)
 ![Loss de validación per Epoch](plots/wandb_plots/all/val_loss.png)
 
-
 El mejor modelo resultó ser una ResNet entrenada en 12 epochs con Batch Size 10, con el optimizador SGD con Momentum 0.5 y Learning Rate 0.005, sin Weight Decay y sin Data Augmentation. Este modelo obtuvo una accuracy en validación de 85.81% al final de los epochs, pero obtuvo su pico de 86.27 % en validación en el Epoch 6.
 
 Sobre los datos de test obtuvo lo siguiente:
@@ -149,3 +152,41 @@ Sobre los datos de test obtuvo lo siguiente:
     Accuracy for class: ship is 92.2 %
     Accuracy for class: truck is 90.5 %
 ```
+
+### Otros resultados
+
+![Tiempo de Entrenamiento](plots/wandb_plots/all/tiempo.png)
+![Consumo Energético](plots/wandb_plots/all/gpu_power.png)
+![Memoria GPU](plots/wandb_plots/all/gpu_memory.png)
+
+Los modelos VGG fueron los mas demandantes en tiempo de entrenamiento, y en consumo energético a lo largo de cada epoch, sin embargo los modelos InceptionNet fueron los que mas memoria de GPU consumieron. Por el otro lado, ademas de ser el modelo que mejor accuracy obtuvo, la ResNet fue, de los modelos mas complejos, el que menos tiempo de entrenamiento necesitó. Por esto ultimo y por su accuracy, la ResNet es el modelo que elegimos para hacer la busqueda de hiperparametros automatizada.
+
+Para la ResNet con un ResidualBlock de `[2, 2, 2, 2]`, entrenamos por 5 epochs con un batch size de 10, hicimos grid search sobre el siguiente espacio de hiperparametros:
+
+```
+    learning_rates = [0.005, 0.001, 0.0005, 0.0001, 0.1]
+    momentums = [0, 0.5, 0.9, 0.99]
+```
+
+Los mejores parametros que obtuvimos fueron los siguientes:
+
+```
+    {
+        'learning_rate': 0.005,
+        'momentum': 0.9,
+        'batch_size': 10,
+        'epochs': 5,
+        'train accuracy' : 82.7625,
+        'val_accuracy: 80.4,
+        'train_loss': 0.05020029389774427,
+        'val_loss': 0.056784901494160295
+    }
+```
+
+Sin embargo, al entrenar por mas epochs no obtuvo mejor accuracy en validación que aquel que entrenamos a mano. 
+
+### Conclusiones
+
+En este trabajo práctico pudimos observar que las redes neuronales convolucionales son mucho mas eficientes para clasificar imagenes que las redes neuronales simples. En particular, la ResNet fue la que mejor accuracy obtuvo, y la que menos tiempo de entrenamiento necesitó.
+
+En cuanto a metodología, 
