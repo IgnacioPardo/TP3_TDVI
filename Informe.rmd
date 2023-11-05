@@ -108,3 +108,19 @@ Los regularizadores que utilizamos y sus resultados fueron los siguientes:
 -   Early Stopping: Esto lo implementamos a mano, viendo sobre los graficos que se generaron en Weights & Biases, cuando la loss de validacion comenzaba a crecer y en simultaneo veiamos como la accuracy mejoraba, identificabamos ese punto de inflexion como epoch maxima para entrenar ese modelo.
 
 ### Resultados
+
+El mejor modelo resultó ser una ResNet entrenada en 12 epochs con Batch Size 10, con el optimizador SGD con Momentum 0.5 y Learning Rate 0.005, sin Weight Decay y sin Data Augmentation. Este modelo obtuvo una accuracy en validación de 85.81% al final de los epochs, pero obtuvo su pico de 86.27 % en validación en el Epoch 6.
+
+Sobre los datos de test obtuvo lo siguiente:
+
+    Accuracy of the network on the 10000 test test_images: 85 %
+    Accuracy for class: plane is 89.6 %
+    Accuracy for class: car is 93.8 %
+    Accuracy for class: bird is 76.6 %
+    Accuracy for class: cat is 70.1 %
+    Accuracy for class: deer is 84.5 %
+    Accuracy for class: dog is 77.2 %
+    Accuracy for class: frog is 90.5 %
+    Accuracy for class: horse is 88.9 %
+    Accuracy for class: ship is 92.2 %
+    Accuracy for class: truck is 90.5 %
