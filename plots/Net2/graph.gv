@@ -121,7 +121,7 @@ strict digraph model {
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128) </TD>
+                        <TD COLSPAN="2">(1, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	10 [label=<
@@ -130,11 +130,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">leaky_relu<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128) </TD>
+                        <TD COLSPAN="2">(1, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128) </TD>
+                        <TD COLSPAN="2">(1, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	11 [label=<
@@ -143,11 +143,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Dropout<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128) </TD>
+                        <TD COLSPAN="2">(1, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128) </TD>
+                        <TD COLSPAN="2">(1, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	12 [label=<
@@ -156,11 +156,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Linear<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128) </TD>
+                        <TD COLSPAN="2">(1, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 64) </TD>
+                        <TD COLSPAN="2">(1, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	13 [label=<
@@ -169,11 +169,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">leaky_relu<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 64) </TD>
+                        <TD COLSPAN="2">(1, 128) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 64) </TD>
+                        <TD COLSPAN="2">(1, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	14 [label=<
@@ -182,11 +182,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Linear<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 64) </TD>
+                        <TD COLSPAN="2">(1, 128) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 32) </TD>
+                        <TD COLSPAN="2">(1, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	15 [label=<
@@ -195,11 +195,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">leaky_relu<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 32) </TD>
+                        <TD COLSPAN="2">(1, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 32) </TD>
+                        <TD COLSPAN="2">(1, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	16 [label=<
@@ -208,11 +208,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Dropout<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 32) </TD>
+                        <TD COLSPAN="2">(1, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 32) </TD>
+                        <TD COLSPAN="2">(1, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	17 [label=<
@@ -221,11 +221,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Linear<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 32) </TD>
+                        <TD COLSPAN="2">(1, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 16) </TD>
+                        <TD COLSPAN="2">(1, 32) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	18 [label=<
@@ -234,11 +234,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">leaky_relu<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 16) </TD>
+                        <TD COLSPAN="2">(1, 32) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 16) </TD>
+                        <TD COLSPAN="2">(1, 32) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	19 [label=<
@@ -247,11 +247,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Linear<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 16) </TD>
+                        <TD COLSPAN="2">(1, 32) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	20 [label=<
@@ -260,11 +260,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">leaky_relu<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 8) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	21 [label=<
@@ -273,11 +273,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Dropout<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 8) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	22 [label=<
@@ -286,11 +286,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Linear<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 8) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	23 [label=<
@@ -299,11 +299,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">leaky_relu<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 4) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	24 [label=<
@@ -312,11 +312,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Linear<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 4) </TD>
+                        <TD COLSPAN="2">(1, 16) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 2) </TD>
+                        <TD COLSPAN="2">(1, 10) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	25 [label=<
@@ -325,11 +325,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">leaky_relu<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 2) </TD>
+                        <TD COLSPAN="2">(1, 10) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 2) </TD>
+                        <TD COLSPAN="2">(1, 10) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	26 [label=<
@@ -338,11 +338,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">Dropout<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 2) </TD>
+                        <TD COLSPAN="2">(1, 10) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 2) </TD>
+                        <TD COLSPAN="2">(1, 10) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	27 [label=<
@@ -351,17 +351,17 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">log_softmax<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 2) </TD>
+                        <TD COLSPAN="2">(1, 10) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 2) </TD>
+                        <TD COLSPAN="2">(1, 10) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	28 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
-                        <TR><TD>output-tensor<BR/>depth:0</TD><TD>(1, 2)</TD></TR>
+                        <TR><TD>output-tensor<BR/>depth:0</TD><TD>(1, 10)</TD></TR>
                     </TABLE>> fillcolor=lightyellow]
 	0 -> 1
 	1 -> 2

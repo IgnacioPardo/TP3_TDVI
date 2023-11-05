@@ -39,20 +39,31 @@ El dataset CIFAR-10 contiene 60000 imágenes de 32x32 pixeles, divididas en 10 c
 
 Realizamos 3 arquitecturas distintas de redes neuronales, con distintas cantidades de capas ocultas y distintas cantidades de neuronas por capa. Para cada una de ellas, variamos la cantidad de capas ocultas y la cantidad de neuronas por capa. Para cada una de estas combinaciones, realizamos 3 corridas distintas, para poder obtener un promedio de los resultados obtenidos (Las imagenes con las arquitecturas se encuentran anexadas al final del documento)
 
+#### Arquitectura Base:
+
+Para comparar las arquitecturas que implementamos, partimos de la arquitectura base que vino con la consigna del trabajo práctico.
+
 #### Arquitectura 1: Softmax Dropout Relu LeakyRelu
 
-La primera arquitectura que decidimos hacer la llamamos Softmax Dropout Relu LeakyRelu, ya que cuenta con una capa de salida Softmax, una capa de Dropout y el resto de las capas con función de activación Relu y LeakyRelu. Esta arquitectura cuenta con 1 capa de entrada, 8 capas ocultas y una de salida.
+La primera arquitectura que decidimos hacer la llamamos Softmax Dropout Relu LeakyRelu, ya que cuenta con una capa de salida Softmax y el resto de las capas con función de activación Relu y LeakyRelu. Esta arquitectura cuenta con 1 capa de entrada, 8 capas ocultas y una de salida. Ademas de las funciones de activación, se utilizan dropouts (2 veces) con una probabilidad del 0.2 para mitigar el overfitting. La arquitectura de la red se puede visualizar en el anexo.
 
 
 #### Arquitectura 2: LeakyRelu Dropout
 
-Esta arquitectura la llamamos LeakyRelu Dropout. Cuenta con una capa de entrada que transforma datos aplanados de 32x32x3 a un espacio de alta dimensión y se suceden múltiples capas ocultas. Entre estas capas, se emplea dropouts (5 veces) con una probabilidad del 0.4 para mitigar el sobreajuste y las unica funcion de activacion empleada es LeakyRelu para introducir no linealidad. El proceso culmina en una capa de salida, con una activación log-softmax para producir probabilidades de clase. En total, la arquitectura consta de 1 capa de entrada, 9 capas ocultas y 1 capa de salida.
-
+Esta arquitectura la llamamos LeakyRelu Dropout. Cuenta con dropouts (5 veces) con una probabilidad del 0.4 para mitigar el sobreajuste y la unica funcion de activacion empleada es LeakyRelu. El proceso culmina en una capa de salida, con una activación log-softmax para producir probabilidades de clase. En total, la arquitectura consta de 1 capa de entrada, 9 capas ocultas y 1 capa de salida.
 
 #### Arquitectura 3: Relu ELU LeakyRelu Dropout
 
 Por último, usamos las red neuronal Relu ELU LeakyRelu, cuya estructura es similar a la segunda arquitectura, pero con una capa de entrada, 5 capas ocultas y una de salida. La diferencia es que en esta arquitectura se utilizan las funciones de activación Relu, ELU y LeakyRelu, pero, al igual que las demas, se utiliza la función de activación log-softmax en la capa de salida.
 
+#### Resultados de las arquitecturas
+
+![Accuracy de Entrenamiento por Epoch en NNs](plots/wandb_plots/nets/train_acc.png)
+![Loss de Entrenamiento por Epoch en NNs](plots/wandb_plots/nets/train_loss.png)
+![Accuracy de Validación por Epoch en NNs](plots/wandb_plots/nets/val_acc.png)
+![Loss de Validación por Epoch en NNs](plots/wandb_plots/nets/val_loss.png)
+
+Ninguna de las 3 arquitecturas logró superar la performance de la arquitectura base sobre validación. Por lo que continuamos el desarrollo con Redes Neuronales Convolucionales.
 
 ### Arquitecturas de Redes Neuronales Convolucionales
 
@@ -60,42 +71,42 @@ Implementamos 5 distintas CNNs para observar su comportamiento en el dataset CIF
 
 #### Arquitectura 1: NetConv
 
-Para la primera arquitectura, tomamos el ejemplo dado en clase y a partir del mismo comenzamos a modificarlo para adaptarlo al problema y obtener mejores resultados. Empezamos probando dropout como técnica de regularizacion y nos dimos cuenta que empeoraba. Luego, despues de varias pruebas, decidimos dejar LeakyRelu como única función de activacion, ya que nos dio mejores resultados que las demás.
+Para la primera arquitectura, tomamos el ejemplo dado en clase y a partir del mismo comenzamos a modificarlo para adaptarlo al problema y obtener mejores resultados. Empezamos probando dropout como técnica de regularizacion y nos dimos cuenta que empeoraba. Luego, despues de varias pruebas, decidimos utilizar LeakyReLu, a diferencia de ReLu, como única función de activacion, ya que nos dio mejores resultados que las demás.
 
+![Train Accuracy por Epoch en CNNs](plots/wandb_plots/convs/train_acc.png)
+![Train Loss por Epoch en CNNs](plots/wandb_plots/convs/train_loss.png)
+![Validation Accuracy por Epoch en CNNs](plots/wandb_plots/convs/val_acc.png)
+![Validation Loss por Epoch en CNNs](plots/wandb_plots/convs/val_loss.png)
 
-#### Arquitectura 2 y 3: VGG16 y VGG19
+#### Arquitecturas 2 y 3: VGG16 y VGG19
 
-Implementamos también dos arquitecturas de redes neuronales convolucionales basadas en la VGG16 y VGG19, respectivamente. Estos dos modelos sólo requieren un pre-procesamiento específico que consiste en restar a cada píxel el valor RGB medio, calculado en el conjunto de entrenamiento. Aunque ambas arquitecturas son muy similares y siguen la misma lógica, la VGG19 tiene un mayor número de capas de convolución.
+Para intentar mejorar los resultados obtenidos con la red neuronal convoluvional detallada en el inciso anterior, implementamos también dos arquitecturas de redes neuronales convolucionales de arquitectura VGG (https://arxiv.org/abs/1409.1556). Una de ellas es VGG16 y la otra VGG19. Para pasar las imagenes por la red las debimos reescalar a 224x224 pixeles, ya que es el tamaño que requiere la arquitectura VGG. VGG19 lo implementamos pero no lo corrimos ya que rapidamente pasamos a evaluar sobre otras arquitecturas descriptas a continuacion.
 
+La arquitectura de ambos modelos se encuentra detallada en el anexo.
 
 #### Arquitectura 4: InceptionNet
 
 Como vimos en clase, la arquitectura InceptionNet es una red neuronal convolucional que tiene como objetivo mejorar la performance de la red reduciendo la cantidad de parámetros. Para lograr esto, la red utiliza filtros de distintos tamaños en la misma capa, y luego los concatena. Para este modelo, lo sacamos de <https://www.kaggle.com/code/mohamedmustafa/10-implement-inceptionnet-from-scratch-pytorch> y lo modificamos para que se adapte a nuestro codigo.
 
-*Aclaración: Debido a una función usada para la implementación del mismo, solo es posible ejecutarlo con CUDA o CPU.*
+El bloque Auxiliar del modelo utiliza el método `AdaptiveAvgPool2d` que para el backend MPS solo funciona cuando el tamaño de la entrada es múltiplo del tamaño de la salida, por lo que solo logramos correr InceptionNet usando el backend `CUDA` o corriendo en `CPU`.
 
+La arquitectura del modelo InceptionNet se encuentra tambien detallada en el anexo.
 
 #### Arquitectura 5: ResNet
 
-Al igual que las anteriores, la arquitectura ResNet es una red neuronal convolucional que también vimos en clase. Esta red utiliza conexiones residuales para poder entrenar redes neuronales más profundas. Esto se logra sumando la entrada de una capa con la salida de la capa anterior. Para este modelo, lo sacamos de <https://blog.paperspace.com/writing-resnet-from-scratch-in-pytorch/> y lo modificamos para que se adapte a nuestro codigo.
+Al igual que las anteriores, la arquitectura ResNet es una red neuronal convolucional que también vimos en clase. Esta red utiliza conexiones residuales para poder entrenar redes neuronales más profundas. Esto se logra sumando la entrada de una capa con la salida de la capa anterior. La implementación de este modelo la tomamos de [Paperspace](https://blog.paperspace.com/writing-resnet-from-scratch-in-pytorch).
 
+La arquitectura del modelo ResNet que impelementamos se encuentra tambien detallada en el anexo.
 
 ### Funciones de activación
 
-Como mencionamos y mostramos en el punto 2, probamos distintas funciones de activacion. En partiuclar en la CNN, los mejores resultados los obtuvimos con la función LeakyRelu, mientras que los peores con la funcion Sigmoid. En cuanto a las redes neuronales no convolucionales, tuvimos los mismos resultados siendo la funcion LeakyRelu la mejor para clasificar las imagenes, y la funcion Sigmoid la peor.
-
-*IMAGENES*
+Como mencionamos anteriormente, probamos distintas funciones de activacion. En partiuclar en la CNN, los mejores resultados los obtuvimos con la función LeakyRelu, mientras que los peores con la funcion Sigmoid. En cuanto a las redes neuronales, tuvimos los mismos resultados siendo la funcion LeakyRelu la mejor para clasificar las imagenes, y la funcion Sigmoid la peor.
 
 ### Optimizadores y Schedulers
 
-Para todas las redes neuronalies utilizamos SGD y Adam pero, luego de probar distintos valores para los hiperparametros, decidimos quedarnos con SGD, ya que nos dio mejores resultados. En cuanto a los schedulers, probamos con StepLR y CosineAnnealingLR, pero decidimos quedarnos con StepLR, ya que nos dio mejores resultados.
+Para todas las redes neuronalies utilizamos SGD. Evaluamos Adam para la Convolucional e InceptionNet pero sus resultados fueron mucho peores (al rededor del 10% de accuracy en validación) por lo que descartamos seguir evaluando con Adam. 
 
-
-### Entrenamiento
-
-Entrenamientos con distintos epochs y batch-sizes:
-
-*IMAGENES*
+En cuanto a los schedulers, sobre nuestro mejor modelo probamos con StepLR y CosineAnnealingLR, StepLR empeoró drásticamente los resultados (14% de accuracy en validación) por lo que descartamos seguir evaluando con StepLR. CosineAnnealingLR logró buenos resultados pero no mejores que los que obtuvimos con el modelo sin scheduler.
 
 ### Regularizadores
 
@@ -109,10 +120,23 @@ Los regularizadores que utilizamos y sus resultados fueron los siguientes:
 
 ### Resultados
 
+Corrimos un total de 120 entrenamientos distintos, de los cuales 58 fueron ResNets (con su exploración de hiperparámetros), 16 InceptionNets, 16 VGG16, 17 ConvNets, 13 Redes Neuronales.
+
+En los siguientes gráfico se puede observar la accuracy de validación y de entrenamiento a lo largo de los epochs de algunos de los mejores modelos de cada arquitectura:
+
+![Accuracy de entrenamiento per Epoch](plots/wandb_plots/all/train_acc.png)
+![Loss de entrenamiento per Epoch](plots/wandb_plots/all/train_loss.png)
+
+![Accuracy de validación final](plots/wandb_plots/all/val_acc_bar.png)
+![Accuracy de validación per Epoch](plots/wandb_plots/all/val_acc.png)
+![Loss de validación per Epoch](plots/wandb_plots/all/val_loss.png)
+
+
 El mejor modelo resultó ser una ResNet entrenada en 12 epochs con Batch Size 10, con el optimizador SGD con Momentum 0.5 y Learning Rate 0.005, sin Weight Decay y sin Data Augmentation. Este modelo obtuvo una accuracy en validación de 85.81% al final de los epochs, pero obtuvo su pico de 86.27 % en validación en el Epoch 6.
 
 Sobre los datos de test obtuvo lo siguiente:
 
+```
     Accuracy of the network on the 10000 test test_images: 85 %
     Accuracy for class: plane is 89.6 %
     Accuracy for class: car is 93.8 %
@@ -124,3 +148,4 @@ Sobre los datos de test obtuvo lo siguiente:
     Accuracy for class: horse is 88.9 %
     Accuracy for class: ship is 92.2 %
     Accuracy for class: truck is 90.5 %
+```
