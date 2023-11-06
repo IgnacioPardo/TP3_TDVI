@@ -1,9 +1,9 @@
 ---
 title: "Trabajo Práctico 3"
 author:
-    - "Zoe Borrone"
-    - "Luca Mazzarello"
-    - "Ignacio Pardo"
+    - "Zoe Borrone - 21G245" 
+    - "Luca Mazzarello - 21L720"
+    - "Ignacio Pardo - 21R1160"
 date: "`r Sys.Date()`"
 lang: "es-ES"
 output: pdf_document
@@ -17,7 +17,7 @@ header-includes:
 
 ## Introducción
 
-El objetivo de este trabajo práctico es evaluar los distintos hiperparámetros encontrados durante el entrenamiento de una red neuronal, evaluarlos y elegir el conjunto de parámetros más óptimos. En el marco de este trabajo práctico, se realizará un clasificador de imágenes CIFAR-10, la cual contiene imágenes de pájaros, gatos, venados, perros, ranas, caballos, barcos y camiones
+El objetivo de este trabajo práctico es evaluar los distintos hiperparámetros encontrados durante el entrenamiento de una red neuronal, evaluarlos y elegir el conjunto de parámetros más óptimos. En el marco de este trabajo práctico, se realizará un clasificador de imágenes CIFAR-10, la cual contiene imágenes de pájaros, gatos, venados, perros, ranas, caballos, barcos y camiones.
 
 ## Dataset
 
@@ -48,7 +48,7 @@ Ademas para entrenamientos mas intensivos en un comienzo utilizamos la GPU T4 de
 
 ## Arquitecturas de Redes Neuronales
 
-Realizamos 3 arquitecturas distintas de redes neuronales, con distintas cantidades de capas ocultas y distintas cantidades de neuronas por capa. Para cada una de ellas, variamos la cantidad de capas ocultas y la cantidad de neuronas por capa. Para cada una de estas combinaciones, realizamos 3 corridas distintas, para poder obtener un promedio de los resultados obtenidos (Las imágenes con las arquitecturas se encuentran anexadas al final del documento)
+Realizamos 3 arquitecturas distintas de redes neuronales, con distintas cantidades de capas ocultas y distintas cantidades de neuronas por capa. Para cada una de ellas, variamos la cantidad de capas ocultas y la cantidad de neuronas por capa. Para cada una de estas combinaciones, realizamos 3 corridas distintas, para poder obtener un promedio de los resultados obtenidos (Las imágenes con las arquitecturas se encuentran anexadas al final del documento).
 
 ### Arquitectura Base:
 
@@ -211,22 +211,22 @@ Para lograr mejores resultados que la modificación a mano del modelo base, lo q
 \newpage
 \section{Anexo}
 
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Arquitectura Net1}}]{plots/Net1/graph.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Detalle Net1}}]{plots/Net1/dot.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Arquitectura Net2}}]{plots/Net2/graph.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Detalle Net2}}]{plots/Net2/dot.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Arquitectura Net3}}]{plots/Net3/graph.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Detalle Net3}}]{plots/Net3/dot.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Arquitectura NetConv}}]{plots/NetConv/graph.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Detalle NetConv}}]{plots/NetConv/dot.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Arquitectura VGG16}}]{plots/VGG16/graph.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Detalle VGG16}}]{plots/VGG16/dot.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Arquitectura VGG19}}]{plots/VGG19/graph.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Detalle VGG19}}]{plots/VGG19/dot.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Arquitectura InceptionNet}}]{plots/InceptionNetV1/graph.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Detalle InceptionNet}}]{plots/InceptionNetV1/dot.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Arquitectura ResNet}}]{plots/ResNet/graph.gv.pdf}
-\includepdf[pages=1, pagecommand={\thispagestyle{plain}\section{Detalle ResNet}}]{plots/ResNet/dot.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{Arquitectura Net1}}]{plots/Net1/graph.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{\centering{Detalle Net1}}}]{plots/Net1/dot.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{Arquitectura Net2}}]{plots/Net2/graph.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{\centering{Detalle Net2}}}]{plots/Net2/dot.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{Arquitectura Net3}}]{plots/Net3/graph.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{\centering{Detalle Net3}}}]{plots/Net3/dot.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{Arquitectura NetConv}}]{plots/NetConv/graph.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{\centering{Detalle NetConv}}}]{plots/NetConv/dot.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{Arquitectura VGG16}}]{plots/VGG16/graph.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{\centering{Detalle VGG16}}}]{plots/VGG16/dot.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{Arquitectura VGG19}}]{plots/VGG19/graph.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{\centering{Detalle VGG19}}}]{plots/VGG19/dot.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{Arquitectura InceptionNet}}]{plots/InceptionNetV1/graph.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{\centering{Detalle InceptionNet}}}]{plots/InceptionNetV1/dot.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{Arquitectura ResNet}}]{plots/ResNet/graph.gv.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{plain}\subsection{\centering{Detalle ResNet}}}]{plots/ResNet/dot.gv.pdf}
 
 \newpage
 
